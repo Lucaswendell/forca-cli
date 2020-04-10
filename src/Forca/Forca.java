@@ -14,19 +14,21 @@ public class Forca {
 				{ "ALIMENTO", "FIGO", "GENGIBRE", "ABÓBORA", "BRÓCOLIS", "CENOURA" },
 				{ "COR", "AMARELO", "VERMELHO", "VERDE", "BRANCO", "AZUL" } };
 
-		String continuar = "S";
-
-		System.out.print("########  #######  ########   ######     ###        ######  ##       #### \n"
-				+ "##       ##     ## ##     ## ##    ##   ## ##      ##    ## ##        ##  \n"
-				+ "##       ##     ## ##     ## ##        ##   ##     ##       ##        ##  \n"
-				+ "######   ##     ## ########  ##       ##     ##    ##       ##        ##  \n"
-				+ "##       ##     ## ##   ##   ##       #########    ##       ##        ##  \n"
-				+ "##       ##     ## ##    ##  ##    ## ##     ##    ##    ## ##        ##  \n"
-				+ "##        #######  ##     ##  ######  ##     ##     ######  ######## #### ");
+		char continuar = 'S';
+		int pontuacao = 0;
+		System.out.print("########  #######  ########   ######     ###        ######  ##       ####   ---------    \n"
+				+ "##       ##     ## ##     ## ##    ##   ## ##      ##    ## ##        ##    |      \\O/  \n"
+				+ "##       ##     ## ##     ## ##        ##   ##     ##       ##        ##    |       |   \n"
+				+ "######   ##     ## ########  ##       ##     ##    ##       ##        ##    |       |   \n"
+				+ "##       ##     ## ##   ##   ##       #########    ##       ##        ##    |      / \\ \n"
+				+ "##       ##     ## ##    ##  ##    ## ##     ##    ##    ## ##        ##    |            \n"
+				+ "##        #######  ##     ##  ######  ##     ##     ######  ######## ####   =====        \n");
 
 		System.out.println();
 		System.out.println();
+
 		do {
+
 			int categoria = new Random().nextInt(palavras.length);
 
 			int indiceDaPalavra = new Random().nextInt(palavras[categoria].length);
@@ -38,22 +40,23 @@ public class Forca {
 			char[] letrasDescobertas = new char[tamanhoPalavra];
 			ArrayList<String> letrasDigitas = new ArrayList<String>();
 
+			// Troca as letras por underlines
 			for (int i = 0; i < tamanhoPalavra; i++) {
 				letrasDescobertas[i] = '_';
 			}
 
-			System.out.println("Categoria: " + palavras[categoria][0]);
-
 			char letraUsuario = 0;
+			int tentativas = 7;
 
-			int tentativas = 5;
 			do {
+
 				boolean acertou = false;
 				boolean digitou = false;
 
 				for (int letra = 0; letra < tamanhoPalavra; letra++) {
+					// Verifica se a letra existe na palavra
 					if (letraUsuario == palavra.charAt(letra)) {
-						letrasDescobertas[letra] = palavra.charAt(letra);
+						letrasDescobertas[letra] = palavra.charAt(letra); // Troca o underline pela letra
 						qtdLetrasDescubertas++;
 						acertou = true;
 					}
@@ -62,20 +65,25 @@ public class Forca {
 
 				}
 
-				if (!acertou) {
+				if (!acertou && letraUsuario != 0) {
 					tentativas--;
 				}
 
 				System.out.println("");
-				System.out.println("Você tem " + tentativas + " tentativas");
+				System.out.println("");
+				System.out.println("Categoria: " + palavras[categoria][0]);
+				System.out.println("Você tem " + tentativas + " tentativas.");
+				System.out.println("Pontuação: " + pontuacao);
+
 				System.out.print("Letras digitadas: ");
 				for (String letraDigitada : letrasDigitas) {
 					System.out.print(letraDigitada + " ");
 				}
+
 				System.out.println("");
 				System.out.println("");
 
-				if (tentativas == 0 || qtdLetrasDescubertas == tamanhoPalavra) {
+				if (qtdLetrasDescubertas == tamanhoPalavra || tentativas == 0) {
 					break;
 				}
 
@@ -83,43 +91,50 @@ public class Forca {
 				letraUsuario = leia.next().toUpperCase().charAt(0);
 				do {
 					digitou = false;
-					for (int letra = 0; letra < letrasDigitas.size(); letra++) {
-						if (letrasDigitas.get(letra).equals(String.valueOf(letraUsuario))) {
+					for (String letra : letrasDigitas) {
+						if (letra.equals(String.valueOf(letraUsuario))) {
 							digitou = true;
+							break;
 						}
 					}
 
 					if (digitou) {
-						System.out.print("Você já digitou esssa letra. Digite outra: ");
+						System.out.print("Você já digitou essa letra. Digite outra: ");
 						letraUsuario = leia.next().toUpperCase().charAt(0);
 					}
 
 				} while (digitou);
+
+				System.out.println("");
 
 				letrasDigitas.add(String.valueOf(letraUsuario));
 
 			} while (qtdLetrasDescubertas != tamanhoPalavra && tentativas != 0);
 
 			if (tentativas == 0) {
-				System.out.println("Você perdeu e foi enforcado. A palvra era: " + palavra);
+				pontuacao -= tamanhoPalavra * 2;
+				System.out.println("Você perdeu e foi enforcado. A palvra era '" + palavra + "'.");
+				System.out.println("Você perdeu " + (tamanhoPalavra * 2) + " pontos.");
 			} else {
+				pontuacao += tamanhoPalavra * 2;
 				System.out.println("Parabêns você acertou a palvra!");
+				System.out.println("Você ganhou " + (tamanhoPalavra * 2) + " pontos.");
 			}
 
+			System.out.println("");
 			System.out.print("Deseja continuar jogando?[S/N]: ");
-			continuar = leia.next().toUpperCase();
-			continuar = continuar.substring(0, 1);
+			continuar = leia.next().toUpperCase().charAt(0);
 
-			while (!(continuar.contains("S") || continuar.contains("N"))) {
+			while (!(continuar == 'S' || continuar == 'N')) {
 				System.out.print("Não entendi. Deseja continuar?[S/N]: ");
-				continuar = leia.next().toUpperCase();
-				continuar = continuar.substring(0, 1);
+				continuar = leia.next().toUpperCase().charAt(0);
 			}
 
-		} while (continuar.equals("S"));
+		} while (continuar == 'S');
 
-		System.out.println("Obrigado por jogar!");
-		System.out.println("Pontuação final: 100");
+		System.out.println("");
+
+		System.out.println("Pontuação final: " + pontuacao);
 	}
 
 }
