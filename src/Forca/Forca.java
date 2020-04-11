@@ -8,7 +8,7 @@ public class Forca {
 	public static Scanner leia = new Scanner(System.in);
 
 	public static void main(String[] args) {
-
+		
 		String[][] palavras = { { "ANIMAL", "CACHORRO", "ARANHA", "ABELHA", "BARATA", "ELEFANTE" },
 				{ "OBJETO", "MESA", "GARFO", "ABAJUR", "BACIA", "CABIDE" },
 				{ "ALIMENTO", "FIGO", "GENGIBRE", "ABÓBORA", "BRÓCOLIS", "CENOURA" },
@@ -16,16 +16,21 @@ public class Forca {
 
 		char continuar = 'S';
 		int pontuacao = 0;
-		System.out.print("########  #######  ########   ######     ###        ######  ##       ####   ---------    \n"
-				+ "##       ##     ## ##     ## ##    ##   ## ##      ##    ## ##        ##    |      \\O/  \n"
-				+ "##       ##     ## ##     ## ##        ##   ##     ##       ##        ##    |       |   \n"
-				+ "######   ##     ## ########  ##       ##     ##    ##       ##        ##    |       |   \n"
-				+ "##       ##     ## ##   ##   ##       #########    ##       ##        ##    |      / \\ \n"
-				+ "##       ##     ## ##    ##  ##    ## ##     ##    ##    ## ##        ##    |            \n"
-				+ "##        #######  ##     ##  ######  ##     ##     ######  ######## ####   =====        \n");
+		
+		System.out.println();
+		//\033[0;34m -> azul
+		//\033[0;31m -> vermelho
+		System.out.print(
+				  "\033[0;34m ########  #######  ########   ######     ###        ######  ##       ####   \u001B[37m ---------    \n"
+				+ "\033[0;34m ##       ##     ## ##     ## ##    ##   ## ##      ##    ## ##        ##    \u001B[37m |   \033[0;31m   \\O/  \n"
+				+ "\033[0;34m ##       ##     ## ##     ## ##        ##   ##     ##       ##        ##    \u001B[37m |   \033[0;31m    |   \n"
+				+ "\033[0;34m ######   ##     ## ########  ##       ##     ##    ##       ##        ##    \u001B[37m |   \033[0;31m    |   \n"
+				+ "\033[0;34m ##       ##     ## ##   ##   ##       #########    ##       ##        ##    \u001B[37m |   \033[0;31m   / \\ \n"
+				+ "\033[0;34m ##       ##     ## ##    ##  ##    ## ##     ##    ##    ## ##        ##    \u001B[37m |            \n"
+				+ "\033[0;34m ##        #######  ##     ##  ######  ##     ##     ######  ######## ####   \u001B[37m =====        \n");
 
 		System.out.println();
-		System.out.println();
+		System.out.println("\u001B[37m"); //branco
 
 		do {
 
@@ -82,7 +87,7 @@ public class Forca {
 
 				System.out.println("");
 				System.out.println("");
-
+				//Vê se o usuario já arcetou ou acabou as tentativas para não pedir a letra
 				if (qtdLetrasDescubertas == tamanhoPalavra || tentativas == 0) {
 					break;
 				}
